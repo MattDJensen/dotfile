@@ -21,6 +21,47 @@ config.line_height = 1.2
 config.font = wezterm.font("JetBrains Mono")
 config.leader = { key = "q", mods = "ALT", timeout_milliseconds = 2000 }
 config.keys = {
+	-- Show list of workspaces
+	{
+		key = "s",
+		mods = "LEADER",
+		action = act.ShowLauncherArgs({ flags = "WORKSPACES" }),
+	},
+	{
+		key = "$",
+		mods = "LEADER|SHIFT",
+		action = act.PromptInputLine({
+			description = "Enter new name for session",
+			action = wezterm.action_callback(function(window, pane, line)
+				if line then
+					mux.rename_workspace(window:mux_window():get_workspace(), line)
+				end
+			end),
+		}),
+	},
+	{
+		key = ",",
+		mods = "LEADER",
+		action = act.PromptInputLine({
+			description = "Enter tab name",
+			action = wezterm.action_callback(function(window, pane, line)
+				if line then
+					window:active_tab():set_title(line)
+				end
+			end),
+		}),
+	},
+	{
+		key = "w",
+		mods = "LEADER",
+		action = act.ShowTabNavigator,
+	},
+	{
+		key = "&",
+		mods = "LEADER|SHIFT",
+		action = act.CloseCurrentTab({ confirm = true }),
+	},
+
 	{
 		mods = "LEADER",
 		key = "c",
@@ -107,27 +148,22 @@ config.hide_tab_bar_if_only_one_tab = false
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 config.tab_and_split_indices_are_zero_based = true
-
-wezterm.on("update-right-status", function(window, _)
-	local SOLID_LEFT_ARROW = ""
-	local ARROW_FOREGROUND = { Foreground = { Color = "#c6a0f6" } }
-	local prefix = ""
-
-	if window:leader_is_active() then
-		prefix = " " .. utf8.char(0x1f30a)
-		SOLID_LEFT_ARROW = utf8.char(0xe0b2)
-	end
-
-	if window:active_tab():tab_id() ~= 0 then
-		ARROW_FOREGROUND = { Foreground = { Color = "#1e2030" } }
-	end
-
-	window.set_left_status(wezterm.format({
-		{ Background = { Color = "#b7bdf8" } },
-		{ Text = prefix },
-		ARROW_FOREGROUND,
-		{ Text = SOLID_LEFT_ARROW },
-	}))
-end)
+config.tab_max_width = 32
+config.pane_focus_follows_mouse = true
+config.scrollback_lines = 5000
+config.window_padding = {
+	left = 0,
+	right = 0,
+	top = 0,
+	bottom = 0,
+}
+config.colors = {
+	tab_bar = {
+		active_tab = {
+			fg_color = "#ffffff",
+			bg_color = "#c80815",
+		},
+	},
+}
 
 return config
