@@ -8,7 +8,7 @@ local mux = wezterm.mux
 local act = wezterm.action
 
 wezterm.on("gui-startup", function()
-	local tab, pane, window = mux.spawn_wiundow({})
+	local tab, pane, window = mux.spawn_window({})
 	window:gui_window():maximize()
 end)
 
@@ -25,6 +25,11 @@ config.keys = {
 		mods = "LEADER",
 		key = "c",
 		action = wezterm.action.SpawnTab("CurrentPaneDomain"),
+	},
+	{
+		key = "Enter",
+		mods = "SHIFT",
+		action = wezterm.action.SendString("\x1b\r"),
 	},
 	{
 		mods = "LEADER",
