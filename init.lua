@@ -326,12 +326,18 @@ require("lazy").setup({
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
+				"csharpier",
+				"csharp-language-server",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			require("mason-lspconfig").setup({
 				ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
 				automatic_installation = false,
+				registries = {
+					"github:mason-org/mason-registry",
+					"github:Crashdummyy/mason-registry",
+				},
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
@@ -517,4 +523,4 @@ require("lazy").setup({
 		end,
 	},
 	--:
-})
+}
