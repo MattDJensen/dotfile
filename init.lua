@@ -23,7 +23,6 @@ vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left wind
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
-
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -118,6 +117,11 @@ require("lazy").setup({
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
 			end, { desc = "[S]earch [N]eovim files" })
 		end,
+	},
+	--: copilot
+	{
+		"github/copilot.vim",
+		lazy = false,
 	},
 	--: catppuccin
 	{
@@ -523,4 +527,95 @@ require("lazy").setup({
 		end,
 	},
 	--:
-}
+	--:which key
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		},
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Local Keymaps (which-key)",
+			},
+		},
+	},
+	--
+	--comments
+	{
+		"numToStr/Comment.nvim",
+		-- gcc -> toggle comment on current line
+		-- gbc -> toggle comment on visual selection
+		lazy = false,
+		config = function()
+			require("Comment").setup()
+		end,
+	},
+	--
+	--: Transparent background
+	{
+		"xiyaowong/nvim-transparent",
+		config = function()
+			require("transparent").setup({
+				groups = {
+					"Normal",
+					"NormalNC",
+					"Comment",
+					"Constant",
+					"Special",
+					"Identifier",
+					"Statement",
+					"PreProc",
+					"Type",
+					"Underlined",
+					"Todo",
+					"String",
+					"Function",
+					"Conditional",
+					"Repeat",
+					"Operator",
+					"Structure",
+					"LineNr",
+					"NonText",
+					"SignColumn",
+					"CursorLine",
+					"CursorLineNr",
+					"StatusLine",
+					"StatusLineNC",
+					"EndOfBuffer",
+				},
+				extra_groups = {},
+				exclude_groups = {},
+				on_clear = function()
+					-- your optional code that executes when transparent is disabled
+				end,
+			})
+		end,
+	},
+	--: nui.nvim
+	{
+		"MunifTanjim/nui.nvim",
+		lazy=true
+
+	},
+
+	--
+	--: fine-cmdline
+	{
+		"VonHeikemen/fine-cmdline.nvim",
+		config = function()
+			require("fine-cmdline").setup({
+				prompt = "❯ ",
+				default_cmd = "Files",
+			})
+			vim.api.nvim_set_keymap("n", ":", "<cmd>FineCmdline<CR>", { noremap = true })
+		end,
+	},
+	--
+})
