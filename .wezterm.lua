@@ -13,7 +13,7 @@ wezterm.on("gui-startup", function()
 end)
 
 --config.window_decorations = "RESIZE"
-
+config.window_background_opacity = 0.95
 config.font_size = 12
 config.color_scheme = "Catppuccin Macchiato"
 config.initial_rows = 28
@@ -39,6 +39,7 @@ config.keys = {
 			end),
 		}),
 	},
+
 	{
 		key = ",",
 		mods = "LEADER",
