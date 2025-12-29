@@ -1,4 +1,4 @@
-rm")
+local wezterm = require("wezterm")
 
 local config = wezterm.config_builder()
 if wezterm.config_builder then
