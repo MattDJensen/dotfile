@@ -11,13 +11,18 @@ vim.o.inccommand = "split"
 vim.o.cursorline = true
 vim.o.scrolloff = 10
 vim.o.confirm = true
-
+vim.opt.breakindent = true
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 --: keymaps
 -- clear highlights
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+--remap escape to jk/kj
+vim.keymap.set("i", "jk", "<Esc>")
+vim.keymap.set("i", "kj", "<Esc>")
+
+--
 
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
@@ -510,23 +515,6 @@ require("lazy").setup({
 		end,
 	},
 	--:
-
-	--: bufferline
-	{
-		"akinsho/bufferline.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require("bufferline").setup({
-				options = {
-					mode = "buffers",
-					separator_style = "thin",
-					show_buffer_close_icons = true,
-					show_close_icon = true,
-				},
-			})
-		end,
-	},
-	--:
 	--:which key
 	{
 		"folke/which-key.nvim",
@@ -598,11 +586,10 @@ require("lazy").setup({
 			})
 		end,
 	},
-	--: nui.nvim
+	--: nui.nvim,dep for windows
 	{
 		"MunifTanjim/nui.nvim",
-		lazy=true
-
+		lazy = true,
 	},
 
 	--
@@ -616,6 +603,69 @@ require("lazy").setup({
 			})
 			vim.api.nvim_set_keymap("n", ":", "<cmd>FineCmdline<CR>", { noremap = true })
 		end,
+	},
+	--
+	--: uv.nvim
+	{
+		"benomahony/uv.nvim",
+		-- Optional filetype to lazy load when you open a python file
+		ft = { python },
+		-- Optional dependency, but recommended:
+		dependencies = {
+			"nvim-telescope/telescope.nvim",
+		},
+		opts = {
+			picker_integration = true,
+		},
+	},
+	--:Obsidian
+	{
+		"obsidian-nvim/obsidian.nvim",
+		version = "*", -- recommended, use latest release instead of latest commit
+		ft = "markdown",
+		lazy = false,
+		---@module 'obsidian'
+		---@type obsidian.config
+		opts = {
+			legacy_commands = false, -- this will be removed in the next major release
+			workspaces = {
+
+				{
+					name = "Work",
+					path = vim.fn.expand("$USERPROFILE/Repos/Notes/Work"),
+				},
+			},
+		},
+	},
+	--:arrow.vim
+	{
+		"otavioschwanck/arrow.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {
+			show_icons = true,
+			leader_key = ";",
+			bufffer_leader_key = "m",
+		},
+	},
+	--: rainbow csv viewer
+	{
+		"cameron-wags/rainbow_csv.nvim",
+		config = true,
+		ft = {
+			"csv",
+			"tsv",
+			"csv_semicolon",
+			"csv_whitespace",
+			"csv_pipe",
+			"rfc_csv",
+			"rfc_semicolon",
+		},
+		cmd = {
+			"RainbowDelim",
+			"RainbowDelimSimple",
+			"RainbowDelimQuoted",
+			"RainbowMultiDelim",
+		},
 	},
 	--
 })
