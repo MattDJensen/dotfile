@@ -1,4 +1,4 @@
-local wezterm = require("wezterm")
+rm")
 
 local config = wezterm.config_builder()
 if wezterm.config_builder then
@@ -121,18 +121,18 @@ config.keys = {
 	{
 		key = "H",
 		mods = "LEADER",
-		action = act.AdjustPaneSize({ "Left", 5 }),
+		action = act.AdjustPaneSize({ "Left", 15 }),
 	},
 	{
 		key = "J",
 		mods = "LEADER",
-		action = act.AdjustPaneSize({ "Down", 5 }),
+		action = act.AdjustPaneSize({ "Down", 15 }),
 	},
-	{ key = "K", mods = "LEADER", action = act.AdjustPaneSize({ "Up", 5 }) },
+	{ key = "K", mods = "LEADER", action = act.AdjustPaneSize({ "Up", 15 }) },
 	{
 		key = "L",
 		mods = "LEADER",
-		action = act.AdjustPaneSize({ "Right", 5 }),
+		action = act.AdjustPaneSize({ "Right", 15 }),
 	},
 }
 
