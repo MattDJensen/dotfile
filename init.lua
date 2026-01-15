@@ -21,7 +21,6 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 --remap escape to jk/kj
 vim.keymap.set("i", "jk", "<Esc>")
 vim.keymap.set("i", "kj", "<Esc>")
-
 --
 
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
@@ -618,25 +617,7 @@ require("lazy").setup({
 			picker_integration = true,
 		},
 	},
-	--:Obsidian
-	{
-		"obsidian-nvim/obsidian.nvim",
-		version = "*", -- recommended, use latest release instead of latest commit
-		ft = "markdown",
-		lazy = false,
-		---@module 'obsidian'
-		---@type obsidian.config
-		opts = {
-			legacy_commands = false, -- this will be removed in the next major release
-			workspaces = {
 
-				{
-					name = "Work",
-					path = vim.fn.expand("$USERPROFILE/Repos/Notes/Work"),
-				},
-			},
-		},
-	},
 	--:arrow.vim
 	{
 		"otavioschwanck/arrow.nvim",
